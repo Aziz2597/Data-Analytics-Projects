@@ -1,0 +1,26 @@
+1. How does the code handle API rate limits or errors, and what improvements can you suggest?
+Answer:
+The code handles errors using a try-except block to catch ConnectionError, Timeout, and TooManyRedirects. 
+ Additionally, the api_runner function introduces a delay (sleep(60)) between successive API calls, helping 
+to manage API rate limits by waiting a minute before the next request.
+However, it does not explicitly handle API rate limits or exponential backoff.
+Improvements:
+Implement a retry mechanism with exponential backoff for handling rate limits.
+Use the response status code to check for 429 Too Many Requests and pause execution accordingly.
+Log errors for debugging and monitoring API call failures.
+
+
+2. What is the purpose of pd.json_normalize, and why is it used in this project?
+Answer:
+pd.json_normalize is used to flatten nested JSON objects into a structured DataFrame, making it easier to manipulate and analyze data.
+In this project, it converts the nested cryptocurrency data (data['data']) into a tabular format, extracting fields like price, percent changes, and other attributes for each cryptocurrency.
+
+
+3. What are the limitations of the current data collection process, and how would you address them?
+Answer:
+Limitations:
+Data is appended to a DataFrame and optionally saved as a CSV file, which may not scale well for large datasets.
+Timestamp accuracy depends on the local system, which might not match the server time.
+Solutions:
+Store data in a database for scalability and easy querying.
+Ensure timestamps align with the server timezone using proper time synchronization.
